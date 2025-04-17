@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxy HUB - Control Painel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="lost.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto&family=Poppins&family=Orbitron&family=Montserrat&family=Open+Sans&display=swap">
+</head>
+<body>
+    <div class="date-display draggable" id="date-display">
+        <span id="current-date">15/04/2025</span>
+        <span id="current-time">00:00:00</span>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Luxy Moon</h1>
+        </header>
+
+        <div class="grid">
+            <!-- Métricas em Tempo Real -->
+            <div class="card draggable" id="metrics-card">
+                <h2>Métricas em Tempo Real</h2>
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>Uso de CPU</span>
+                        <span id="cpu-usage" class="fade-in">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="cpu-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>Uso de Memória</span>
+                        <span id="ram-usage" class="fade-in">0 MB</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="ram-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>Velocidade de Rede</span>
+                        <span id="network-speed" class="fade-in">0 Mbps</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="speed-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>Tempo de Uso do HUB</span>
+                        <span id="hub-uptime" class="fade-in">00:00:00</span>
+                    </div>
+                </div>
+                <div class="metric" id="battery-metric" style="display: none;">
+                    <div class="metric-label">
+                        <span>Nível de Bateria</span>
+                        <span id="battery-level" class="fade-in">N/A</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="battery-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>Sistema Operacional</span>
+                        <span id="os-info" class="fade-in">Desconhecido</span>
+                    </div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>Navegador</span>
+                        <span id="browser-info" class="fade-in">Desconhecido</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget: Detalhes do Perfil -->
+            <div class="card draggable profile-details-card" id="profile-details-card">
+                <div class="banner" id="banner-image">
+                    <input type="file" id="banner-upload" accept="image/*" style="display: none;">
+                </div>
+                <button class="menu-btn" id="customization-toggle">...</button>
+                <div class="profile-details-content">
+                    <img id="detailed-profile-image" src="https://via.placeholder.com/80" alt="Perfil" class="detailed-profile-pic">
+                    <div class="profile-info">
+                        <h2 id="detailed-nickname">Usuário</h2>
+                        <div class="pronouns" id="detailed-pronouns">She/Her</div>
+                        <div class="bio" id="detailed-bio">Escreva algo sobre você...</div>
+                        <div class="mood-section">
+                            <input type="text" id="mood-input" placeholder="Frase do dia ou mood..." value="Café + código = ☕💻">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de Navegação -->
+            <div class="card draggable" id="navigation-card">
+                <h2>Navegação</h2>
+                <div class="navigation-bar">
+                    <input type="text" id="nav-link-input" placeholder="Digite um URL (ex.: youtube.com)">
+                    <button id="nav-link-btn"><i class="fas fa-link"></i> Abrir Link</button>
+                </div>
+                <div class="social-links" id="social-links">
+                    <a href="https://youtube.com" target="_blank" class="social-btn" data-id="youtube"><i class="fab fa-youtube"></i><span class="remove-link">×</span></a>
+                    <a href="https://discord.com" target="_blank" class="social-btn" data-id="discord"><i class="fab fa-discord"></i><span class="remove-link">×</span></a>
+                    <a href="https://roblox.com" target="_blank" class="social-btn" data-id="roblox"><i class="fas fa-gamepad"></i><span class="remove-link">×</span></a>
+                    <a href="https://spotify.com" target="_blank" class="social-btn" data-id="spotify"><i class="fab fa-spotify"></i><span class="remove-link">×</span></a>
+                </div>
+                <div class="add-social-link">
+                    <input type="text" id="new-social-url" placeholder="Novo URL (ex.: instagram.com)">
+                    <input type="file" id="new-social-icon" accept="image/*" style="display: none;">
+                    <button id="add-social-btn"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel de Configurações -->
+    <div class="settings-panel" id="settings-panel">
+        <div class="settings-header">
+            <h2>Configurações do CyberHub</h2>
+            <button class="back-btn" onclick="toggleSettings()"><i class="fas fa-arrow-left"></i> Voltar</button>
+        </div>
+
+        <div class="settings-section">
+            <h3>Background</h3>
+            <div class="settings-content">
+                <input type="file" id="background-upload" accept="image/*" style="display: none;">
+                <button id="upload-background-btn"><i class="fas fa-image"></i> Alterar Background</button>
+                <button id="theme-background-btn" style="margin-top: 8px;"><i class="fas fa-paint-brush"></i> Usar Tema Atual</button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Tema</h3>
+            <div class="settings-content">
+                <select id="theme-select">
+                    <option value="dark">Escuro</option>
+                    <option value="light">Claro</option>
+                    <option value="cyberpunk">Cyberpunk</option>
+                    <option value="hacker">Hacker</option>
+                    <option value="hell">Hell</option>
+                    <option value="synthwave">Synthwave</option>
+                    <option value="glitch">Glitch</option>
+                    <option value="floresta">Floresta</option>
+                    <option value="oceano">Oceano</option>
+                    <option value="deserto">Deserto</option>
+                    <option value="vampiro">Vampiro</option>
+                    <option value="lunar">Lunar</option>
+                    <option value="neon-tokyo">Neon Tokyo</option>
+                    <option value="psicodelico">Psicodélico</option>
+                    <option value="candy">Candy</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Modo de Interface</h3>
+            <div class="settings-content">
+                <select id="ui-mode-select">
+                    <option value="complete">Completo</option>
+                    <option value="compact">Compacto</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Posição da Data</h3>
+            <div class="settings-content">
+                <select id="date-position-select">
+                    <option value="top-left">Superior Esquerdo</option>
+                    <option value="top-right">Superior Direito</option>
+                    <option value="bottom-left">Inferior Esquerdo</option>
+                    <option value="bottom-right">Inferior Direito</option>
+                    <option value="custom">Personalizado (arrastar)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Efeitos Visuais</h3>
+            <div class="settings-content">
+                <select id="visual-effects-select">
+                    <option value="none">Nenhum</option>
+                    <option value="custom">Imagem Personalizada</option>
+                </select>
+                <div id="custom-effect-upload" style="display: none; margin-top: 8px;">
+                    <input type="file" id="custom-effect-image" accept="image/*" style="display: none;">
+                    <button id="upload-effect-image-btn"><i class="fas fa-image"></i> Escolher Imagem</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Tamanho dos Widgets</h3>
+            <div class="settings-content">
+                <div class="widget-size-controls">
+                    <button id="decrease-widget-size"><i class="fas fa-minus"></i></button>
+                    <button id="increase-widget-size"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Fonte do Usuário</h3>
+            <div class="settings-content">
+                <select id="user-font-select">
+                    <option value="Roboto">Roboto</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Orbitron">Orbitron</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Open Sans">Open Sans</option>
+                </select>
+                <input type="file" id="user-custom-font-upload" accept=".ttf,.otf" style="display: none;">
+                <button id="user-upload-font-btn" style="margin-top: 8px;"><i class="fas fa-font"></i> Carregar Fonte Personalizada</button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Notificações</h3>
+            <div class="settings-content">
+                <label style="display: block; margin: 10px 0;">
+                    <input type="checkbox" id="connection-alerts" checked> Alertas de Conexão
+                </label>
+                <label style="display: block; margin: 10px 0;">
+                    <input type="checkbox" id="resource-alerts" checked> Avisos de Recursos
+                </label>
+            </div>
+        </div>
+
+        <div class="settings-footer">
+            <button id="save-settings-btn"><i class="fas fa-save"></i> Salvar Configurações</button>
+        </div>
+    </div>
+
+    <!-- Painel de Customização do Usuário -->
+    <div class="customization-panel" id="customization-panel">
+        <div class="customization-header">
+            <h2>Customização do Usuário</h2>
+            <button class="back-btn" onclick="toggleCustomization()"><i class="fas fa-arrow-left"></i> Voltar</button>
+        </div>
+
+        <div class="customization-section">
+            <h3>Foto de Perfil</h3>
+            <div class="customization-content">
+                <input type="file" id="profile-upload" accept="image/*" style="display: none;">
+                <button id="upload-avatar-btn"><i class="fas fa-camera"></i> Alterar Foto de Perfil</button>
+            </div>
+        </div>
+
+        <div class="customization-section">
+            <h3>Nickname</h3>
+            <div class="customization-content">
+                <input type="text" id="nickname-input" placeholder="Novo nickname">
+                <button id="update-nickname-btn" style="margin-top: 8px;"><i class="fas fa-user-edit"></i> Atualizar Dados</button>
+            </div>
+        </div>
+
+        <div class="customization-section">
+            <h3>Fonte do Nickname</h3>
+            <div class="customization-content">
+                <select id="font-select">
+                    <option value="Roboto">Roboto</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Orbitron">Orbitron</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Open Sans">Open Sans</option>
+                </select>
+                <input type="file" id="custom-font-upload" accept=".ttf,.otf" style="display: none;">
+                <button id="upload-font-btn" style="margin-top: 8px;"><i class="fas fa-font"></i> Carregar Fonte Personalizada</button>
+            </div>
+        </div>
+
+        <div class="customization-section">
+            <h3>Cor da Borda</h3>
+            <div class="customization-content">
+                <input type="color" id="border-color" value="#ff4d4d">
+            </div>
+        </div>
+
+        <div class="customization-section">
+            <h3>Cor do Nickname</h3>
+            <div class="customization-content">
+                <input type="color" id="nickname-color" value="#e0e0e0">
+            </div>
+        </div>
+
+        <div class="customization-section">
+            <h3>Pronomes</h3>
+            <div class="customization-content">
+                <input type="text" id="pronouns-input" placeholder="Ex.: She/Her">
+            </div>
+        </div>
+
+        <div class="customization-section">
+            <h3>Biografia</h3>
+            <div class="customization-content">
+                <textarea id="bio-input" placeholder="Escreva algo sobre você..." rows="4"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="settings-toggle" id="settings-toggle">
+        ⚙️
+    </div>
+
+    <div class="notification" id="notification">
+        <div id="notification-message">Mensagem de notificação</div>
+        <button class="mute-btn">Silenciar</button>
+    </div>
+
+    <div id="visual-effects-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
